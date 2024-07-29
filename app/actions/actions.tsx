@@ -31,13 +31,13 @@ export async function clipVideos(formData: FormData) {
     } catch (error) {
       logger.error('An error occurred:', error);
     }
-    // clip videos
-    try {
-      await clip(clips, [], uploadPath);
-      return { isCompleted: true };
-    } catch (error) {
-      logger.error('An error occurred:', error);
-    }
+  }
+  // clip videos
+  try {
+    await clip(clips, [], uploadPath);
+    return { isCompleted: true };
+  } catch (error) {
+    logger.error('An error occurred:', error);
   }
 }
 
