@@ -91,7 +91,7 @@ export default function Home() {
     <main>
       <h1>Batch Clip Videos</h1>
       <div className='pt-10 videos'>
-        <h2>Video Files</h2>
+        <h2>Upload Video Files</h2>
         <div className=''>
           <form action='' id='files-form'>
             <input
@@ -135,7 +135,7 @@ export default function Home() {
         </button>
       </div>
       <div className='progress' ref={progressRef}>
-        {isComplete ? <p>All Videos Are Clipped </p> : null}
+        {isComplete ? <p>All clips Are finished </p> : null}
       </div>
     </main>
   );
