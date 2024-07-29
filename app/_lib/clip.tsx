@@ -1,0 +1,58 @@
+import { $ } from 'execa';
+
+import { removeFileExt } from './file-naming';
+import { ClipInfo } from '../_components/definitions/definitions';
+import path from 'path';
+import filenamify from 'filenamify';
+import { ToColonedDigits } from '../_lib/date';
+
+function replaceColonWithDash(time: string) {
+  return time.replace(/:/g, '-');
+}
+
+async function clip(
+  clipInfo: ClipInfo[],
+  summary: string[] = [],
+  uploadPath: string = 'uploads'
+) {
+  const outPutFolder = 'output';
+  for (let index = 0; index < clipInfo.length; index++) {
+    // show start
+    console.log(`Start ${index + 1} of ${clipInfo.length}`);
+    const {
+      start = '',
+      end = '',
+      description,
+      name: videoFullName,
+    } = clipInfo[index];
+    const movieName = removeFileExt(videoFullName ?? '');
+    const generatedClipFileName = filenamify(
+      `${movieName}-${description}-from-${replaceColonWithDash(
+        start as string
+      )}-to-${replaceColonWithDash(end as string)}.mp4`
+    );
+    const inputPath = path.join(uploadPath, videoFullName ?? '');
+    const outPutPath = path.join(outPutFolder, generatedClipFileName);
+
+    try {
+      await $`ffmpeg -loglevel error -i ${inputPath} -ss ${ToColonedDigits(
+        start
+      )} -to ${ToColonedDigits(end)} -map 0:a:0 -map 0:v:0 -ac 2 ${outPutPath}`;
+      // summary
+      summary.push(
+        `${index + 1} of ${clipInfo.length}. ${generatedClipFileName} done`
+      );
+    } catch (error) {
+      console.error('An error occurred:', error);
+      summary.push(
+        `${index + 1} of ${clipInfo.length}. ${generatedClipFileName} failed`
+      );
+    }
+  }
+  // log summary
+  console.log(summary.join('\n'));
+  // remove uploaded files
+  $`rm -rf ${uploadPath}`;
+}
+
+export { clip };
