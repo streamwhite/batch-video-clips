@@ -11,6 +11,7 @@ export default function Home() {
   const progressRef = useRef<HTMLDivElement>(null);
 
   const [videos, setVideos] = useState<FileList | null>(null);
+  const hasVideo = videos && videos.length > 0;
   // save  video clips amount for each video
 
   const [clipsAmount, setClipsAmount] = useState<ClipAmount[]>([]);
@@ -108,7 +109,7 @@ export default function Home() {
           </form>
         </div>
       </div>
-      <div className={`videos ${videos?.length ? '' : 'hide'}`}>
+      <div className={`videos ${hasVideo ? '' : 'hide'}`}>
         <form action=''>
           <h2>Clips Amount for Each Video</h2>
           <VideosClipsAmount
@@ -118,7 +119,7 @@ export default function Home() {
           />
         </form>
       </div>
-      <div className={`timeslots ${videos?.length ? '' : 'hide'}`}>
+      <div className={`timeslots ${hasVideo ? '' : 'hide'}`}>
         <h2>Time Slots</h2>
         <form action='' id='times-form'>
           <ClipInfoUI
@@ -128,7 +129,7 @@ export default function Home() {
           />
         </form>
       </div>
-      <div className='start-clip '>
+      <div className={`start-clip ${hasVideo ? '' : 'hide'}`}>
         <button id='start-clip' onClick={handleStart} disabled={isInClipping}>
           {isInClipping ? 'Clipping' : 'Start'}
         </button>
