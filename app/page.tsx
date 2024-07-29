@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-const { useState, useEffect } = React;
+const { useState, useRef } = React;
 import VideosClipsAmount from './_components/VideosClipsAmount';
 import { ClipAmount, ClipInfo } from './_components/definitions/definitions';
 import ClipInfoUI from './_components/ClipInfo';
@@ -8,7 +8,7 @@ import { clipVideos } from './actions/actions';
 
 export default function Home() {
   // create progress ref
-  const progressRef = React.useRef<HTMLDivElement>(null);
+  const progressRef = useRef<HTMLDivElement>(null);
 
   const [videos, setVideos] = useState<FileList | null>(null);
   // save  video clips amount for each video
@@ -134,7 +134,7 @@ export default function Home() {
         </button>
       </div>
       <div className='progress' ref={progressRef}>
-        <p>{isComplete ? 'All Videos Are Clipped ' : ''}</p>
+        {isComplete ? <p>All Videos Are Clipped </p> : null}
       </div>
     </main>
   );
