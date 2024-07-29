@@ -7,6 +7,9 @@ import ClipInfoUI from './_components/ClipInfo';
 import { clipVideos } from './actions/actions';
 
 export default function Home() {
+  // create progress ref
+  const progressRef = React.useRef<HTMLDivElement>(null);
+
   const [videos, setVideos] = useState<FileList | null>(null);
   // save  video clips amount for each video
 
@@ -74,6 +77,7 @@ export default function Home() {
       if (res?.isCompleted) {
         setIsComplete(true);
         setIsInClipping(false);
+        progressRef.current?.scrollIntoView({ behavior: 'smooth' });
       }
     });
   }
@@ -129,7 +133,7 @@ export default function Home() {
           {isInClipping ? 'Clipping' : 'Start'}
         </button>
       </div>
-      <div className='progress'>
+      <div className='progress' ref={progressRef}>
         <p>{isComplete ? 'All Videos Are Clipped ' : ''}</p>
       </div>
     </main>
