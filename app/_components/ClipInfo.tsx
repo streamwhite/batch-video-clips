@@ -13,9 +13,7 @@ export default function ClipInfoUI({
         return (
           <li key={clip.name} className='pt-4'>
             <div className='time-slot'>
-              <p className='name'>
-                video {index + 1}-{clip.name} clip info
-              </p>
+              <p className='name'>{clip.name} clip info</p>
               {amount > 0 &&
                 Array(amount)
                   .fill(0)
@@ -29,7 +27,7 @@ export default function ClipInfoUI({
                     const clipInfoIndex = index + i;
                     return (
                       <div key={i} className='time-slot-item'>
-                        <h4>{amount >= 2 ? 'clip' + (i + 1) : null}</h4>
+                        <h4>{amount >= 2 ? `clip ${i + 1}` : null}</h4>
                         <label htmlFor={startId}>start time</label>
                         <input
                           type='text'

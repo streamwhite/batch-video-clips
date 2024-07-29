@@ -11,9 +11,7 @@ export default function VideosClipsAmount({
         Array.from(videos).map((video, index) => (
           <li key={video.name} className='pt-4'>
             <div className='clips-amount'>
-              <p className='name'>
-                video {index + 1}-{video.name} clips amount
-              </p>
+              <p className='name'>{video.name} clips amount</p>
               <input
                 type='number'
                 name={`clips-${index}`}
