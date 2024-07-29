@@ -104,7 +104,7 @@ export default function Home() {
           </form>
         </div>
       </div>
-      <div className='videos'>
+      <div className={`videos ${videos?.length ? '' : 'hide'}`}>
         <form action=''>
           <h2>Clips Amount for Each Video</h2>
           <VideosClipsAmount
@@ -114,7 +114,7 @@ export default function Home() {
           />
         </form>
       </div>
-      <div className='timeslots'>
+      <div className={`timeslots ${videos?.length ? '' : 'hide'}`}>
         <h2>Time Slots</h2>
         <form action='' id='times-form'>
           <ClipInfoUI

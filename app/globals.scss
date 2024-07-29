@@ -20,6 +20,12 @@ body {
   padding: 0 2rem;
   color: rgb(var(--foreground-rgb));
 
+  form {
+    label {
+      margin-right: 0.5rem;
+    }
+  }
+
   input[type='text'],
   input[type='number'] input[type='files'] {
     // show border
@@ -28,21 +34,30 @@ body {
     border-radius: 0.25rem;
     height: 2rem;
   }
-  #start-clip {
-    background: linear-gradient(
-      to bottom right,
-      rgb(var(--background-start-rgb)),
-      rgb(var(--background-end-rgb))
-    );
-  }
+
   .time-slot {
     input {
       margin-right: 2rem;
+    }
+  }
+
+  .start-clip {
+    margin-top: 2rem;
+    button {
+      padding: 0 1rem;
+      font-weight: 900;
+      border: 2px solid black;
+      border-radius: 0.5rem;
     }
   }
   .progress {
     color: lightcoral;
     font-size: xx-large;
     font-weight: 900;
+  }
+
+  // utility classes
+  .hide {
+    display: none;
   }
 }
