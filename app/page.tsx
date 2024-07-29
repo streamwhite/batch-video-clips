@@ -1,7 +1,5 @@
 'use client';
 import * as React from 'react';
-import Grid from '@mui/material/Grid';
-import Container from '@mui/material/Container';
 const { useState, useEffect } = React;
 import VideosClipsAmount from './_components/VideosClipsAmount';
 import { ClipAmount, ClipInfo } from './_components/definitions/definitions';
@@ -79,10 +77,6 @@ export default function Home() {
       }
     });
   }
-  // add form refs with useRef
-  const videosRef = React.useRef<HTMLFormElement>(null);
-  const clipInfoRef = React.useRef<HTMLFormElement>(null);
-  const clipsAmountRef = React.useRef<HTMLFormElement>(null);
 
   // set isComplete
   const [isComplete, setIsComplete] = useState(false);
@@ -90,64 +84,54 @@ export default function Home() {
 
   return (
     <main>
-      <Container className=''>
-        <Grid container spacing={2}>
-          <Grid item xs={12}>
-            <h1>Batch Clip Videos</h1>
-            <div className='pt-10 videos'>
-              <h2>Video Files</h2>
-              <div className=''>
-                <form action='' id='files-form' ref={videosRef}>
-                  <input
-                    type='file'
-                    name='files'
-                    id='files'
-                    multiple
-                    required
-                    onChange={(e) => {
-                      setClipsAmount([]);
-                      setIsComplete(false);
-                      setVideos(e.target.files);
-                    }}
-                  />
-                </form>
-              </div>
-            </div>
-            <div className='videos'>
-              <form action='' ref={clipsAmountRef}>
-                <h2>Clips Amount for Each Video</h2>
-                <VideosClipsAmount
-                  videos={videos}
-                  recordClipsAmount={recordClipsAmount}
-                  clipsAmount={clipsAmount}
-                />
-              </form>
-            </div>
-            <div className='timeslots'>
-              <h2>Time Slots</h2>
-              <form action='' id='times-form' ref={clipInfoRef}>
-                <ClipInfoUI
-                  clipsAmount={clipsAmount}
-                  updateClipInfo={updateClipInfo}
-                  clipInfo={clipInfo}
-                />
-              </form>
-            </div>
-            <div className='start-clip '>
-              <button
-                id='start-clip'
-                onClick={handleStart}
-                disabled={isInClipping}
-              >
-                {isInClipping ? 'Clipping' : 'Start'}
-              </button>
-            </div>
-            <div className='progress'>
-              <p>{isComplete ? 'All Videos Are Clipped ' : ''}</p>
-            </div>
-          </Grid>
-        </Grid>
-      </Container>
+      <h1>Batch Clip Videos</h1>
+      <div className='pt-10 videos'>
+        <h2>Video Files</h2>
+        <div className=''>
+          <form action='' id='files-form'>
+            <input
+              type='file'
+              name='files'
+              id='files'
+              multiple
+              required
+              onChange={(e) => {
+                setClipsAmount([]);
+                setIsComplete(false);
+                setVideos(e.target.files);
+              }}
+            />
+          </form>
+        </div>
+      </div>
+      <div className='videos'>
+        <form action=''>
+          <h2>Clips Amount for Each Video</h2>
+          <VideosClipsAmount
+            videos={videos}
+            recordClipsAmount={recordClipsAmount}
+            clipsAmount={clipsAmount}
+          />
+        </form>
+      </div>
+      <div className='timeslots'>
+        <h2>Time Slots</h2>
+        <form action='' id='times-form'>
+          <ClipInfoUI
+            clipsAmount={clipsAmount}
+            updateClipInfo={updateClipInfo}
+            clipInfo={clipInfo}
+          />
+        </form>
+      </div>
+      <div className='start-clip '>
+        <button id='start-clip' onClick={handleStart} disabled={isInClipping}>
+          {isInClipping ? 'Clipping' : 'Start'}
+        </button>
+      </div>
+      <div className='progress'>
+        <p>{isComplete ? 'All Videos Are Clipped ' : ''}</p>
+      </div>
     </main>
   );
 }
