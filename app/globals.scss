@@ -28,4 +28,14 @@ body {
       rgb(var(--background-end-rgb))
     );
   }
+  .time-slot {
+    input {
+      margin-right: 2rem;
+    }
+  }
+  .progress {
+    color: lightcoral;
+    font-size: xx-large;
+    font-weight: 900;
+  }
 }

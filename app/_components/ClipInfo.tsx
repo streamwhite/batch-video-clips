@@ -60,7 +60,7 @@ export default function ClipInfoUI({
                             updateClipInfo(slots2[clipInfoIndex]);
                           }}
                         />
-                        <label htmlFor={descriptionId}>description</label>
+                        <label htmlFor={descriptionId}>clip description</label>
                         <input
                           type='text'
                           name={descriptionId}

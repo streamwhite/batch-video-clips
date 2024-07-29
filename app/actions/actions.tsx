@@ -32,7 +32,12 @@ export async function clipVideos(formData: FormData) {
       logger.error('An error occurred:', error);
     }
     // clip videos
-    clip(clips, [], uploadPath);
+    try {
+      await clip(clips, [], uploadPath);
+      return { isCompleted: true };
+    } catch (error) {
+      logger.error('An error occurred:', error);
+    }
   }
 }
 

@@ -20,7 +20,7 @@ export default function VideosClipsAmount({
                 id={`clips-${index}`}
                 required
                 min={1}
-                onBlur={(e) => {
+                onChange={(e) => {
                   const clips = clipsAmount.slice();
                   clips[index] = {
                     amount: parseInt(e.target.value),

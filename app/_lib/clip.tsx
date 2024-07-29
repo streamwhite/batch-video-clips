@@ -35,7 +35,7 @@ async function clip(
     const outPutPath = path.join(outPutFolder, generatedClipFileName);
 
     try {
-      await $`ffmpeg -loglevel error -i ${inputPath} -ss ${ToColonedDigits(
+      await $`ffmpeg -loglevel error -i ${inputPath} -y -ss ${ToColonedDigits(
         start
       )} -to ${ToColonedDigits(end)} -map 0:a:0 -map 0:v:0 -ac 2 ${outPutPath}`;
       // summary

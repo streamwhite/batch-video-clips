@@ -69,13 +69,24 @@ export default function Home() {
     return formData;
   }
   function handleStart() {
+    setIsInClipping(true);
+    setIsComplete(false);
     const formData = generateFormData();
-    clipVideos(formData).then((res) => {});
+    clipVideos(formData).then((res) => {
+      if (res?.isCompleted) {
+        setIsComplete(true);
+        setIsInClipping(false);
+      }
+    });
   }
   // add form refs with useRef
   const videosRef = React.useRef<HTMLFormElement>(null);
   const clipInfoRef = React.useRef<HTMLFormElement>(null);
   const clipsAmountRef = React.useRef<HTMLFormElement>(null);
+
+  // set isComplete
+  const [isComplete, setIsComplete] = useState(false);
+  const [isInClipping, setIsInClipping] = useState(false);
 
   return (
     <main>
@@ -95,6 +106,7 @@ export default function Home() {
                     required
                     onChange={(e) => {
                       setClipsAmount([]);
+                      setIsComplete(false);
                       setVideos(e.target.files);
                     }}
                   />
@@ -122,9 +134,16 @@ export default function Home() {
               </form>
             </div>
             <div className='start-clip '>
-              <button id='start-clip' onClick={handleStart}>
-                Start
+              <button
+                id='start-clip'
+                onClick={handleStart}
+                disabled={isInClipping}
+              >
+                {isInClipping ? 'Clipping' : 'Start'}
               </button>
+            </div>
+            <div className='progress'>
+              <p>{isComplete ? 'All Videos Are Clipped ' : ''}</p>
             </div>
           </Grid>
         </Grid>
