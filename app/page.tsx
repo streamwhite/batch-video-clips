@@ -6,6 +6,7 @@ import { ClipAmount, ClipInfo } from './_components/definitions/definitions';
 
 import { clipVideos } from './actions/actions';
 import ClipInfoUI from './_components/ClipInfo';
+import { getVideosAndClips, hasEmptyValue } from './_lib/utils';
 
 export default function Home() {
   // create progress ref
@@ -76,11 +77,22 @@ export default function Home() {
   const timeUsedRef = useRef<number>(0);
   const clippingStartTimeRef = useRef<number>(0);
 
+  function validateEmpty(formData: FormData) {
+    const { clips: clipsInfo } = getVideosAndClips(formData);
+    return clipsInfo.some(
+      (clip) => hasEmptyValue(clip) || Object.keys(clip).length !== 4
+    );
+  }
+
   function handleStart() {
+    const formData = generateFormData();
+    // validate data
+    if (validateEmpty(formData)) {
+      return alert('Please fill all fields');
+    }
     clippingStartTimeRef.current = Date.now();
     setIsInClipping(true);
     setIsComplete(false);
-    const formData = generateFormData();
     clipVideos(formData).then((res) => {
       if (res?.isCompleted) {
         timeUsedRef.current = Date.now() - clippingStartTimeRef.current;
