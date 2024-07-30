@@ -7,7 +7,7 @@ import { ClipAmount, ClipInfo } from './_components/definitions/definitions';
 import { clipVideos } from './actions/actions';
 import ClipInfoUI from './_components/ClipInfo';
 import { getVideosAndClips, hasEmptyValue } from './_lib/utils';
-
+import ms from 'ms';
 export default function Home() {
   // create progress ref
   const progressRef = useRef<HTMLDivElement>(null);
@@ -158,7 +158,7 @@ export default function Home() {
         {isComplete ? (
           <p>
             All clips Are finished with{' '}
-            {(timeUsedRef.current / 60000).toFixed(2)} minutes
+            {ms(timeUsedRef.current, { long: true })}
           </p>
         ) : null}
       </div>
