@@ -3,8 +3,9 @@ import * as React from 'react';
 const { useState, useRef } = React;
 import VideosClipsAmount from './_components/VideosClipsAmount';
 import { ClipAmount, ClipInfo } from './_components/definitions/definitions';
-import ClipInfoUI from './_components/ClipInfo';
+
 import { clipVideos } from './actions/actions';
+import ClipInfoUI from './_components/ClipInfo';
 
 export default function Home() {
   // create progress ref
@@ -70,12 +71,21 @@ export default function Home() {
       });
     return formData;
   }
+  // record start time of clipping
+  type ClippingTime = {
+    start: number;
+    end: number;
+  };
+  let timeUsed = 0;
+  const clippingTime: ClippingTime = { start: 0, end: 0 };
   function handleStart() {
+    clippingTime.start = Date.now();
     setIsInClipping(true);
     setIsComplete(false);
     const formData = generateFormData();
     clipVideos(formData).then((res) => {
       if (res?.isCompleted) {
+        timeUsed = Date.now() - clippingTime.start;
         setIsComplete(true);
         setIsInClipping(false);
         progressRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -135,7 +145,11 @@ export default function Home() {
         </button>
       </div>
       <div className='progress' ref={progressRef}>
-        {isComplete ? <p>All clips Are finished </p> : null}
+        {isComplete ? (
+          <p>
+            All clips Are finished with {(timeUsed / 60000).toFixed(2)} minutes
+          </p>
+        ) : null}
       </div>
     </main>
   );
