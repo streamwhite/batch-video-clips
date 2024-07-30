@@ -72,20 +72,18 @@ export default function Home() {
     return formData;
   }
   // record start time of clipping
-  type ClippingTime = {
-    start: number;
-    end: number;
-  };
-  let timeUsed = 0;
-  const clippingTime: ClippingTime = { start: 0, end: 0 };
+
+  const timeUsedRef = useRef<number>(0);
+  const clippingStartTimeRef = useRef<number>(0);
+
   function handleStart() {
-    clippingTime.start = Date.now();
+    clippingStartTimeRef.current = Date.now();
     setIsInClipping(true);
     setIsComplete(false);
     const formData = generateFormData();
     clipVideos(formData).then((res) => {
       if (res?.isCompleted) {
-        timeUsed = Date.now() - clippingTime.start;
+        timeUsedRef.current = Date.now() - clippingStartTimeRef.current;
         setIsComplete(true);
         setIsInClipping(false);
         progressRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -147,7 +145,8 @@ export default function Home() {
       <div className='progress' ref={progressRef}>
         {isComplete ? (
           <p>
-            All clips Are finished with {(timeUsed / 60000).toFixed(2)} minutes
+            All clips Are finished with{' '}
+            {(timeUsedRef.current / 60000).toFixed(2)} minutes
           </p>
         ) : null}
       </div>
