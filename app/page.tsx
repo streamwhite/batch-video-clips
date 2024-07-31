@@ -1,14 +1,20 @@
 'use client';
 import * as React from 'react';
-const { useState, useRef } = React;
 import VideosClipsAmount from './_components/VideosClipsAmount';
 import { ClipAmount, ClipInfo } from './_components/definitions/definitions';
+const { useState, useRef } = React;
 
-import { clipVideos } from './actions/actions';
+import ms from 'ms';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import ClipInfoUI from './_components/ClipInfo';
 import { getVideosAndClips, hasEmptyValue } from './_lib/utils';
-import ms from 'ms';
+import { clipVideos } from './actions/actions';
+
 export default function Home() {
+  const notify = () =>
+    toast.info('Please fill all fields before Start Clipping!');
+
   // create progress ref
   const progressRef = useRef<HTMLDivElement>(null);
 
@@ -88,7 +94,7 @@ export default function Home() {
     const formData = generateFormData();
     // validate data
     if (validateEmpty(formData)) {
-      return alert('Please fill all fields');
+      return notify();
     }
     clippingStartTimeRef.current = Date.now();
     setIsInClipping(true);
@@ -162,6 +168,7 @@ export default function Home() {
           </p>
         ) : null}
       </div>
+      <ToastContainer />
     </main>
   );
 }

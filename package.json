@@ -17,16 +17,17 @@
     "pino": "^9.3.2",
     "pino-pretty": "^11.2.2",
     "react": "^18",
-    "react-dom": "^18"
+    "react-dom": "^18",
+    "react-toastify": "^10.0.5"
   },
   "devDependencies": {
+    "@types/ms": "^0.7.34",
     "@types/node": "^20",
     "@types/react": "^18",
     "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "14.0.4",
     "sass": "^1.77.8",
-    "typescript": "^5",
-    "@types/ms": "^0.7.34"
+    "typescript": "^5"
   }
 }
