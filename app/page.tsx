@@ -2,7 +2,7 @@
 import * as React from 'react';
 import VideosClipsAmount from './_components/VideosClipsAmount';
 import { ClipAmount, ClipInfo } from './_components/definitions/definitions';
-const { useState, useRef } = React;
+const { useState, useRef, useEffect } = React;
 
 import ms from 'ms';
 import { toast, ToastContainer } from 'react-toastify';
@@ -104,7 +104,6 @@ export default function Home() {
         timeUsedRef.current = Date.now() - clippingStartTimeRef.current;
         setIsComplete(true);
         setIsInClipping(false);
-        progressRef.current?.scrollIntoView({ behavior: 'smooth' });
       }
     });
   }
@@ -112,6 +111,10 @@ export default function Home() {
   // set isComplete
   const [isComplete, setIsComplete] = useState(false);
   const [isInClipping, setIsInClipping] = useState(false);
+  useEffect(() => {
+    // scroll to progress
+    progressRef.current?.scrollIntoView({ behavior: 'smooth' });
+  }, [isComplete]);
 
   return (
     <main>
@@ -164,7 +167,8 @@ export default function Home() {
         {isComplete ? (
           <p>
             All clips Are finished with{' '}
-            {ms(timeUsedRef.current, { long: true })}
+            {ms(timeUsedRef.current, { long: true })}. Find your clips in the
+            project <span className='folder'>output</span> folder
           </p>
         ) : null}
       </div>
