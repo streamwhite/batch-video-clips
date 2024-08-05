@@ -2,6 +2,7 @@
 
 import pino from 'pino';
 import { clip } from '../_lib/clip';
+import { batchConvert } from '../_lib/convert';
 import * as wrappedFs from '../_lib/fs';
 import { getVideosAndClips } from '../_lib/utils';
 
@@ -33,6 +34,34 @@ export async function clipVideos(formData: FormData) {
   // clip videos
   try {
     await clip(clips, [], uploadPath);
+    return { isCompleted: true };
+  } catch (error) {
+    logger.error('An error occurred:', error);
+  }
+}
+
+// convert videos to mp4
+export async function convertVideos(formData: FormData) {
+  // get videos
+  const { videos } = getVideosAndClips(formData);
+  // write videos to disk
+  const uploadPath = 'uploads';
+  await wrappedFs.ensureDirAsync(uploadPath);
+  // save videos
+  // todo: put in to a  function
+  for (const video of videos) {
+    const file = video as File;
+    try {
+      await wrappedFs.writeFileAsync(file, uploadPath);
+    } catch (error) {
+      logger.error('An error occurred:', error);
+    }
+  }
+  const outPutFolder = 'output';
+
+  //convert videos to mp4
+  try {
+    await batchConvert(uploadPath, outPutFolder);
     return { isCompleted: true };
   } catch (error) {
     logger.error('An error occurred:', error);
