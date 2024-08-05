@@ -4,23 +4,41 @@ import { convertVideos } from '../actions/actions';
 const { useState, useRef, useEffect } = React;
 
 export default function Home() {
+  // isCompleted
+  const [isCompleted, setIsCompleted] = useState<boolean>(false);
   return (
     <div>
       <h1>Convert videos to MP4</h1>
       <div className='pt-10 videos'>
         <h2>Upload Video Files</h2>
         <div className=''>
-          <form action={convertVideos} id='files-form'>
+          <form action='' id='files-form'>
             <input type='file' name='video' id='files' multiple required />
             {/* todo reuse style */}
-            <button id='start' type='submit'>
+            <button
+              id='start'
+              type='submit'
+              onClick={(e) => {
+                e.preventDefault();
+                const form = document.getElementById(
+                  'files-form'
+                ) as HTMLFormElement;
+                const formData = new FormData(form);
+                convertVideos(formData).then((res) => {
+                  if (res?.isCompleted) {
+                    setIsCompleted(true);
+                  }
+                });
+              }}
+            >
               start
             </button>
           </form>
         </div>
       </div>
-
-      <div className='progress'>all video files are converted</div>
+      {isCompleted ? (
+        <div className='progress'>all video files are converted</div>
+      ) : null}
     </div>
   );
 }
