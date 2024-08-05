@@ -1,10 +1,10 @@
 import { $ } from 'execa';
 
-import { removeFileExt } from './file-naming';
-import { ClipInfo } from '../_components/definitions/definitions';
-import path from 'path';
 import filenamify from 'filenamify';
+import path from 'path';
+import { ClipInfo } from '../_components/definitions/definitions';
 import { ToColonedDigits } from '../_lib/date';
+import { removeFileExt } from './file-naming';
 
 function replaceColonWithDash(time: string) {
   return time.replace(/:/g, '-');
