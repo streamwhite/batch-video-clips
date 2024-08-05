@@ -1,8 +1,11 @@
 'use server';
 
+import path from 'path';
 import pino from 'pino';
 import { clip } from '../_lib/clip';
+import { concatCTA as mergeCTA } from '../_lib/concat-cta';
 import { batchConvert } from '../_lib/convert';
+import { recoverFileName } from '../_lib/file-naming';
 import * as wrappedFs from '../_lib/fs';
 import { getVideosAndClips } from '../_lib/utils';
 
@@ -62,6 +65,41 @@ export async function convertVideos(formData: FormData) {
   //convert videos to mp4
   try {
     await batchConvert(uploadPath, outPutFolder);
+    return { isCompleted: true };
+  } catch (error) {
+    logger.error('An error occurred:', error);
+  }
+}
+
+export async function concatCTA(formData: FormData) {
+  // get videos
+  const { videos } = getVideosAndClips(formData);
+  // get cta
+  const cta = formData.get('cta') as File;
+  // write videos to disk
+  const uploadPath = 'uploads';
+  await wrappedFs.ensureDirAsync(uploadPath);
+  // save videos
+  // todo: put in to a  function
+  for (const video of [...videos, cta]) {
+    const file = video as File;
+    try {
+      await wrappedFs.writeFileAsync(file, uploadPath);
+    } catch (error) {
+      logger.error('An error occurred:', error);
+    }
+  }
+  const outPutFolder = 'output';
+
+  //convert videos to mp4
+  try {
+    await mergeCTA({
+      videos: videos.map((video) =>
+        path.join(uploadPath, recoverFileName(video as File))
+      ),
+      outPutPath: outPutFolder,
+      CTA: path.join(uploadPath, recoverFileName(cta)),
+    });
     return { isCompleted: true };
   } catch (error) {
     logger.error('An error occurred:', error);
