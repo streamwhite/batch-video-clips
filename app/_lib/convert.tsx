@@ -1,28 +1,21 @@
 #! /usr/bin/env node
 import { $ } from 'execa';
+import * as fs from 'fs';
+import * as path from 'path';
 
-// const inputPath = 'raw';
-// const outPutPath = 'output/converted';
-// const files = fs
-//   .readdirSync(inputPath)
-//   .filter((fileName) => isVideo(fileName.trim()));
-
-// convert each video file
-// process summary
-await batchConvert(inputPath, outPutPath);
-
-async function batchConvert(inputPath, outPutPath) {
+export async function batchConvert(inputPath: string, outPutPath: string) {
   const files = fs
     .readdirSync(inputPath)
-    .filter((fileName) => isVideo(fileName.trim()));
-  const summary = [];
+    .filter((fileName: string) => isVideo(fileName.trim()));
+  const summary: string[] = [];
   for (let index = 0; index < files.length; index++) {
     const fileName = files[index];
     try {
       console.log(`start converting ${files[index]}...`);
       const expectedExt = 'mp4';
+      const ext = path.extname(fileName);
       const outputFileName = !fileName.endsWith(expectedExt)
-        ? fileName.replace(ext, expectedExt)
+        ? fileName.replace(ext, `.${expectedExt}`)
         : fileName;
       await $`ffmpeg -loglevel error -i ${path.join(
         inputPath,
@@ -36,7 +29,7 @@ async function batchConvert(inputPath, outPutPath) {
   }
 }
 
-function isVideo(fileName) {
+function isVideo(fileName: string): boolean {
   return (
     fileName.endsWith('.mp4') ||
     fileName.endsWith('.avi') ||
