@@ -1,7 +1,7 @@
 #! /usr/bin/env node
 import { $ } from 'execa';
-import * as fs from 'fs';
-import * as path from 'path';
+import fs from 'fs';
+import path from 'path';
 
 export async function batchConvert(inputPath: string, outPutPath: string) {
   const files = fs
@@ -26,6 +26,7 @@ export async function batchConvert(inputPath: string, outPutPath: string) {
       console.error(`Error converting file ${fileName}: ${error}`);
       summary.push(`${index + 1} of ${files.length}. ${fileName} failed`);
     }
+    console.log(summary.join('\n'));
   }
 }
 

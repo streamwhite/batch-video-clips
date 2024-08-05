@@ -11,13 +11,15 @@ export default function Home() {
         <h2>Upload Video Files</h2>
         <div className=''>
           <form action={convertVideos} id='files-form'>
-            <input type='file' name='files' id='files' multiple required />
+            <input type='file' name='video' id='files' multiple required />
+            {/* todo reuse style */}
+            <button id='start' type='submit'>
+              start
+            </button>
           </form>
         </div>
       </div>
-      <div className='start'>
-        <button id='start'>start</button>
-      </div>
+
       <div className='progress'>all video files are converted</div>
     </div>
   );
