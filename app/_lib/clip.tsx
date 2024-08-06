@@ -51,8 +51,6 @@ async function clip(
   }
   // log summary
   console.log(summary.join('\n'));
-  // remove uploaded files
-  $`rm -rf ${uploadPath}`;
 }
 
 export { clip };

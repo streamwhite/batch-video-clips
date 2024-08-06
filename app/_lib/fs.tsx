@@ -2,7 +2,7 @@
 import { join } from 'path';
 import { recoverFileName } from '../_lib/file-naming';
 // improt promisify utility
-import { promisify } from 'util';
+import { $ } from 'execa';
 
 // promisify writeFile
 import fs from 'fs';
@@ -17,4 +17,9 @@ function ensureDirAsync(folder: string) {
   return fs.promises.mkdir(folder, { recursive: true });
 }
 
-export { writeFileAsync, ensureDirAsync };
+// delete folder and files inside
+async function deleteFolderRecursive(path: string) {
+  await $(`rm -rf ${path}`);
+}
+
+export { deleteFolderRecursive, ensureDirAsync, writeFileAsync };
