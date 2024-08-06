@@ -42,16 +42,17 @@ body {
     }
   }
 
-  .start-clip {
+  #start {
     margin-top: 2rem;
-    button {
-      padding: 0 1rem;
-      font-weight: 900;
-      border: 2px solid black;
-      border-radius: 0.5rem;
-    }
+  }
+  button {
+    padding: 0 1rem;
+    font-weight: 900;
+    border: 2px solid black;
+    border-radius: 0.5rem;
   }
   .progress {
+    margin-top: 2rem;
     color: lightcoral;
     .folder {
       color: lightgreen;

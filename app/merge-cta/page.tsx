@@ -14,7 +14,7 @@ export default function Home() {
           <h2>Upload Video Files</h2>
           <input type='file' name='video' id='files' multiple required />
           <h2>Upload call to action file </h2>
-          <input type='file' name='cta' id='cta' multiple required />
+          <input type='file' name='cta' id='cta' required />
 
           {/* todo reuse style */}
           <div>
