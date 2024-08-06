@@ -3,6 +3,7 @@
 import path from 'path';
 import pino from 'pino';
 import { clip } from '../_lib/clip';
+import { batchCompress } from '../_lib/compress';
 import { concatCTA as mergeCTA } from '../_lib/concat-cta';
 import { batchConvert } from '../_lib/convert';
 import { recoverFileName } from '../_lib/file-naming';
