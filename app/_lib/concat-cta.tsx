@@ -4,18 +4,18 @@ interface ConcatCTAParams {
   videos: string[];
   outPutPath: string;
   CTA: string;
-  archivePath?: string;
+  inputPath: string;
 }
 
 export async function concatCTA({
   videos,
   outPutPath,
   CTA,
-  archivePath,
+  inputPath,
 }: ConcatCTAParams) {
   for (let index = 0; index < videos.length; index++) {
     console.log(`start processing file ${videos[index]}`);
-    const filePath = videos[index];
+    const filePath = path.join(inputPath, videos[index]);
     const fileName = path.basename(filePath);
     const command = `ffmpeg  -loglevel error -i ${filePath} -i ${CTA} -filter_complex "[0:v:0][0:a:0][1:v:0][1:a:0]concat=n=2:v=1:a=1[outv][outa]" -map "[outv]" -map "[outa]" ${path.join(
       outPutPath,
@@ -28,8 +28,6 @@ export async function concatCTA({
     }
   }
 }
-
-// ffmpeg -loglevel error -i "uploads\张国荣知名电影霸王别姬-菊仙赎身.mp4" -i "uploads\CTA-ZH.mp4" -filter_complex """[0:v:0][0:a:0][1:v:0][1:a:0]concat=n=2:v=1:a=1[outv][outa]""" -map """[outv]""" -map """[outa]""" "张国荣知名电影霸王别姬-菊仙赎身.mp4"
 
 // readme
 // 所有的文件需要有音轨；否则，会报错,这个怎么防止。

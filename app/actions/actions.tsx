@@ -94,11 +94,10 @@ export async function concatCTA(formData: FormData) {
   //convert videos to mp4
   try {
     await mergeCTA({
-      videos: videos.map((video) =>
-        path.join(uploadPath, recoverFileName(video as File))
-      ),
+      videos: videos.map((video) => recoverFileName(video as File)),
       outPutPath: outPutFolder,
       CTA: path.join(uploadPath, recoverFileName(cta)),
+      inputPath: uploadPath,
     });
     return { isCompleted: true };
   } catch (error) {
