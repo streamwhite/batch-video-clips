@@ -4,7 +4,7 @@ export default function Nav() {
     <nav className='nav'>
       <ul>
         <li>
-          <a href='/'>Home</a>
+          <a href='/'>clip videos</a>
         </li>
         <li>
           <a href='/convert'>Convert</a>

@@ -8,7 +8,7 @@ export default function Home() {
   const [isCompleted, setIsCompleted] = useState<boolean>(false);
   return (
     <div>
-      <h1>Convert videos to MP4</h1>
+      <h1>merge call to action video</h1>
       <div className='pt-10 videos'>
         <form action='' id='files-form'>
           <h2>Upload Video Files</h2>
