@@ -1,5 +1,6 @@
 'use client';
 import * as React from 'react';
+import { compressVideos } from '../actions/actions';
 const { useState } = React;
 
 export default function Home() {
@@ -24,6 +25,11 @@ export default function Home() {
                   'files-form'
                 ) as HTMLFormElement;
                 const formData = new FormData(form);
+                compressVideos(formData).then((res) => {
+                  if (res?.isCompleted) {
+                    setIsCompleted(true);
+                  }
+                });
               }}
             >
               start
