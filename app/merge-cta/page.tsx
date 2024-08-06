@@ -12,7 +12,6 @@ export default function Home() {
       <div className='pt-10 videos'>
         <form action='' id='files-form'>
           <h2>Upload Video Files</h2>
-
           <input type='file' name='video' id='files' multiple required />
           <h2>Upload call to action file </h2>
           <input type='file' name='cta' id='cta' multiple required />
