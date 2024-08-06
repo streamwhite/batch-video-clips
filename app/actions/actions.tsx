@@ -104,3 +104,30 @@ export async function concatCTA(formData: FormData) {
     logger.error('An error occurred:', error);
   }
 }
+
+// compress videos
+export async function compressVideos(formData: FormData) {
+  // get videos
+  const { videos } = getVideosAndClips(formData);
+  // get cta
+  const uploadPath = 'uploads';
+  await wrappedFs.ensureDirAsync(uploadPath);
+  // save videos
+  for (const video of videos) {
+    const file = video as File;
+    try {
+      await wrappedFs.writeFileAsync(file, uploadPath);
+    } catch (error) {
+      logger.error('An error occurred:', error);
+    }
+  }
+  const outPutFolder = 'output';
+
+  //compress videos
+  try {
+    await batchCompress(uploadPath, outPutFolder);
+  } catch (error) {
+    logger.error('An error occurred:', error);
+  }
+  return { isCompleted: true };
+}

@@ -1,0 +1,39 @@
+'use client';
+import * as React from 'react';
+const { useState } = React;
+
+export default function Home() {
+  // isCompleted
+  const [isCompleted, setIsCompleted] = useState<boolean>(false);
+  return (
+    <div>
+      <h1>Compress videos</h1>
+      <div className='pt-10 videos'>
+        <form action='' id='files-form'>
+          <h2>Upload Video Files</h2>
+          <input type='file' name='video' id='files' multiple required />
+
+          {/* todo reuse style */}
+          <div>
+            <button
+              id='start'
+              type='submit'
+              onClick={(e) => {
+                e.preventDefault();
+                const form = document.getElementById(
+                  'files-form'
+                ) as HTMLFormElement;
+                const formData = new FormData(form);
+              }}
+            >
+              start
+            </button>
+          </div>
+        </form>
+      </div>
+      {isCompleted ? (
+        <div className='progress'>all video files are compressed</div>
+      ) : null}
+    </div>
+  );
+}
