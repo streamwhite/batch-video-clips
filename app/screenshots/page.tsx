@@ -13,7 +13,14 @@ export default function Home() {
           <h2>Upload Video Files</h2>
           <input type='file' name='video' id='files' required />
           <h2>interval </h2>
-          <input type='number' name='interval' id='interval' min='1' required />
+          <input
+            type='number'
+            name='interval'
+            id='interval'
+            min='1'
+            max='100'
+            required
+          />
           <div>
             <button
               id='start'
