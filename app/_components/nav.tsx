@@ -18,6 +18,9 @@ export default function Nav() {
         <li>
           <a href='/merge-cta'>Merge CTA</a>
         </li>
+        <li>
+          <a href='/rename-iphone-videos-with-meta'>Rename Iphone Videos</a>
+        </li>
       </ul>
     </nav>
   );
