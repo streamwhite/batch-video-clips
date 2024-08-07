@@ -44,7 +44,10 @@ const getVideoInfo = async (
 };
 
 // rename each video file with video info
-export async function rename(videosParentPath: string): Promise<void> {
+export async function renameIphoneVideosWithMeta(
+  videosParentPath: string,
+  outputFolderPath: string
+): Promise<void> {
   const videosName: string[] = fs.readdirSync(videosParentPath).filter(isVideo);
   for (const fullName of videosName) {
     const ext = fullName.split('.').pop();
@@ -57,7 +60,7 @@ export async function rename(videosParentPath: string): Promise<void> {
       formatDate(new Date(creation_time), 'yyyy-MM-dd-HH-mm-ss') ?? ''
     }-${codecType}.${ext}`;
     const inputPath = path.join(videosParentPath, fullName);
-    const outputPath = path.join(videosParentPath, newFileName);
+    const outputPath = path.join(outputFolderPath, newFileName);
     await $`mv ${inputPath} ${outputPath}`;
   }
 }

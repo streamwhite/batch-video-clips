@@ -11,6 +11,7 @@ import * as wrappedFs from '../_lib/fs';
 import { deleteFolderRecursive } from '../_lib/fs';
 import { screenshotsWithInterval } from '../_lib/screenshotsWithInterval';
 import { getVideosAndClips } from '../_lib/utils';
+import { renameIphoneVideosWithMeta } from '../rename-with-meta';
 
 const uploadPath = 'uploads';
 
@@ -171,4 +172,34 @@ export async function takeScreenShots(formData: FormData) {
 
   deleteFolderRecursive(uploadPath);
   return { isCompleted: true };
+}
+
+// rename-iphone-videos-with-meta
+export async function renameVideosWithMeta(formData: FormData) {
+  const { videos } = getVideosAndClips(formData);
+
+  await wrappedFs.ensureDirAsync(uploadPath);
+  // save videos
+  await saveVideos(videos);
+  const outPutFolder = 'output';
+
+  //rename videos
+  try {
+    await renameIphoneVideosWithMeta(uploadPath, outPutFolder);
+  } catch (error) {
+    logger.error('An error occurred:', error);
+  }
+
+  deleteFolderRecursive(uploadPath);
+  return { isCompleted: true };
+}
+async function saveVideos(videos: FormDataEntryValue[]) {
+  for (const video of videos) {
+    const file = video as File;
+    try {
+      await wrappedFs.writeFileAsync(file, uploadPath);
+    } catch (error) {
+      logger.error('An error occurred:', error);
+    }
+  }
 }

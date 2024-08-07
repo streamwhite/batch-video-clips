@@ -1,6 +1,6 @@
 'use client';
 import * as React from 'react';
-import { takeScreenShots } from '../actions/actions';
+import { renameVideosWithMeta } from '../actions/actions';
 const { useState } = React;
 
 export default function Home() {
@@ -22,7 +22,7 @@ export default function Home() {
                   'files-form'
                 ) as HTMLFormElement;
                 const formData = new FormData(form);
-                takeScreenShots(formData).then((res) => {
+                renameVideosWithMeta(formData).then((res) => {
                   if (res?.isCompleted) {
                     setIsCompleted(true);
                   }
