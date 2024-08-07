@@ -17,6 +17,7 @@ export default function Home() {
               id='start'
               type='submit'
               onClick={(e) => {
+                setIsCompleted(false);
                 e.preventDefault();
                 const form = document.getElementById(
                   'files-form'
@@ -35,7 +36,7 @@ export default function Home() {
         </form>
       </div>
       {isCompleted ? (
-        <div className='progress'>all video files are compressed</div>
+        <div className='progress'>all video are renamed</div>
       ) : null}
     </div>
   );

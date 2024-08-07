@@ -20,6 +20,7 @@ export default function Home() {
               id='start'
               type='submit'
               onClick={(e) => {
+                setIsCompleted(false);
                 e.preventDefault();
                 const form = document.getElementById(
                   'files-form'

@@ -23,6 +23,7 @@ export default function Home() {
               type='submit'
               onClick={(e) => {
                 e.preventDefault();
+                setIsCompleted(false);
                 const form = document.getElementById(
                   'files-form'
                 ) as HTMLFormElement;
